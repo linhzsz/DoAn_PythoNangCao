@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Đăng Ký</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="/">Xem Thời Tiết</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Trang chủ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Trang 1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Trang 2</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="login"></i> Đăng Nhập</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="register"> Đăng Kí</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="login-container mt-4">
+        <h2>Đăng Ký</h2>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form action="{{ url_for('register') }}" method="POST">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Tên người dùng:</label>
+                <input type="text" class="form-control" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mật khẩu:</label>
+                <input type="password" class="form-control" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Xác nhận mật khẩu:</label>
+                <input type="password" class="form-control" name="confirm_password" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Địa điểm:</label>
+                <input type="text" class="form-control" name="location" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Đăng Ký</button>
+        </form>
+        <p class="mt-3">Đã có tài khoản? <a href="{{ url_for('login') }}">Đăng nhập</a></p>
+    </div>
+</body>
+</html>

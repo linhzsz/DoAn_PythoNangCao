@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dự báo thời tiết</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <style>
+        /* Thêm khoảng cách cho phần nội dung để tránh bị che bởi navbar cố định */
+        .container {
+            margin-top: 70px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="/">Xem Thời Tiết</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Trang chủ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Trang 1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Trang 2</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="login">Đăng Nhập</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="register"> Đăng Kí</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>Xem thời tiết</h1>
+        <form method="POST" action="/search">
+            <input type="text" id="cityInput" name="city" placeholder="Nhập tên thành phố" required>
+            <button type="submit">Xem thời tiết</button>
+            <h2>Thời tiết tại {{ weather['name'] }}</h2>
+            
+            {% if weather %}
+                <p>Nhiệt độ: {{ weather['main']['temp'] }} °C</p>
+                <p>Độ ẩm: {{ weather['main']['humidity'] }}%</p>
+                <p>Thời tiết: {{ weather['weather'][0]['description'] }}</p>
+            {% else %}
+                <p>Không tìm thấy thông tin thời tiết cho thành phố này.</p>
+            {% endif %}
+            <a href="/">Quay lại trang chính</a>
+        </form>
+
+        <div class="weather-cards">
+            <div class="weather-info">
+                <h3>Thời tiết tại London</h3>
+                {% if weather_london %}
+                    <p>Nhiệt độ: {{ weather_london['main']['temp'] }} °C</p>
+                    <p>Độ ẩm: {{ weather_london['main']['humidity'] }}%</p>
+                    <p>Thời tiết: {{ weather_london['weather'][0]['description'] }}</p>
+                {% else %}
+                    <p>Không tìm thấy thông tin thời tiết.</p>
+                {% endif %}
+            </div>
+
+            <div class="weather-info">
+                <h3>Thời tiết tại Tokyo</h3>
+                {% if weather_tokyo %}
+                    <p>Nhiệt độ: {{ weather_tokyo['main']['temp'] }} °C</p>
+                    <p>Độ ẩm: {{ weather_tokyo['main']['humidity'] }}%</p>
+                    <p>Thời tiết: {{ weather_tokyo['weather'][0]['description'] }}</p>
+                {% else %}
+                    <p>Không tìm thấy thông tin thời tiết.</p>
+                {% endif %}
+            </div>
+
+            <div class="weather-info">
+                <h3>Thời tiết tại Washington</h3>
+                {% if weather_washington %}
+                    <p>Nhiệt độ: {{ weather_washington['main']['temp'] }} °C</p>
+                    <p>Độ ẩm: {{ weather_washington['main']['humidity'] }}%</p>
+                    <p>Thời tiết: {{ weather_washington['weather'][0]['description'] }}</p>
+                {% else %}
+                    <p>Không tìm thấy thông tin thời tiết.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
